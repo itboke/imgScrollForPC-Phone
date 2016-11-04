@@ -1,3 +1,7 @@
+/*
+ * @一个PC端 & 移动端 都可以使用的 图片轮播插件
+ * @author hzl
+*/
 var Slider = (function(opts){
 
 	//默认配置
@@ -57,7 +61,16 @@ var Slider = (function(opts){
 			overflow:'hidden',
 			margin:0,
 			width:_$totleWidth
-		})
+		});
+		//轮播标志
+		var _$hd = $ele.find('.hd');
+		if(_$hd.length){			
+			_this.oDot = _$hd.find('a');
+			_this.oDot.eq(0).addClass('on');
+			_$hd.css({
+				marginLeft: -_$hd.innerWidth()/2
+			})
+		}
 		_this._autoPlay = _this.default.autoPlay;
 		if(_this._autoPlay)_this.autoRuning();
 	}
@@ -136,6 +149,7 @@ Slider.prototype.animating = function(fn){
 	},_this.default.timeForAnimate,'swing',function(){
 		_this._autoPlay && fn && (fn)(_this);
 	})
+	_this.oDot.removeClass('on').eq(_this.iCurrent).addClass('on');
 }
 Slider.prototype.PC = function(type){
 	this.timer && clearInterval(this.timer);
@@ -161,7 +175,7 @@ Slider.prototype.isMobile = function(){
 
 new Slider({
 	el:'#sliderBox',
-	autoPlay:false,
+	autoPlay:true,
 	timeForAuto:1500,
 	timeForAnimate:500
 });

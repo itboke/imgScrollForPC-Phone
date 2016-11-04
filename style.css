@@ -8,6 +8,23 @@ img {
 .hide {
   display: none !important;
 }
+
+@keyframes moving {
+  from {
+    width: 12px;
+  }
+  to {
+    width: 25px;
+  }
+}
+@-webkit-keyframes moving {
+  from {
+    width: 12px;
+  }
+  to {
+    width: 25px;
+  }
+}
 .main-content {
   padding-top: 30px;
   background-color: #F4F4F6;
@@ -61,4 +78,27 @@ img {
 .main-content .slider-box .next:after {
   transform: rotate(45deg);
 }
-
+.main-content .slider-box .hd {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  padding: 0 4px;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.main-content .slider-box .hd a {
+  margin: 4px;
+  float: left;
+  width: 12px;
+  height: 12px;
+  color: #fff;
+  background-color: #fff;
+  border-radius: 6px;
+}
+.main-content .slider-box .hd .on {
+  animation: moving 0.5s ease-out 1;
+  -webkit-animation: moving 0.5s ease-out 1;
+  animation-fill-mode: forwards;
+  background-color: #fe6500;
+}
