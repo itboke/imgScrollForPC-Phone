@@ -9,7 +9,8 @@ var Slider = (function(opts){
 		el:'.slider-box', //默认选择顶级父元素
 		autoPlay:false, //是否开启自动滚动 默认：false
 		timeForAuto:1000,//滚动元素自动循环的间隔时间
-		timeForAnimate:300 //滚动元素的滚动效果执行时间
+		timeForAnimate:300, //滚动元素的滚动效果执行时间
+		ratio:0.2//滑动的距离比例才进行运动
 	};
 	//屏幕元素默认为第一个 0 
 	this.iCurrent  = 0;
@@ -109,22 +110,27 @@ var Slider = (function(opts){
 		var _disX = _this.oPosition.x - _this.startX;
 		var _disY = _this.oPosition.y - _this.startY;
 		if(Math.abs(_disY) < Math.abs(_disX)){
-			if(_disX < 0){//向右滑动
-				_this.iCurrent++;
-				if(_this.iCurrent < _this.attrL && _this.iCurrent >= 0){
-					_this.animating(_this.autoRuning);
-				}else{
-					_this.iCurrent = _this.attrL - 1;
-					_this.animating(_this.autoRuning);
+			var ratio = Math.abs(_disX) / _this.attrW;
+			if(ratio >= _this.default.ratio){
+				if(_disX < 0){//向右滑动
+					_this.iCurrent++;
+					if(_this.iCurrent < _this.attrL && _this.iCurrent >= 0){
+						_this.animating(_this.autoRuning);
+					}else{
+						_this.iCurrent = _this.attrL - 1;
+						_this.animating(_this.autoRuning);
+					}
+				}else{//向左滑动
+					_this.iCurrent--;
+					if(_this.iCurrent < 0){
+						_this.iCurrent = 0;
+						_this.animating(_this.autoRuning);
+					}else{
+						_this.animating(_this.autoRuning);
+					}
 				}
-			}else{//向左滑动
-				_this.iCurrent--;
-				if(_this.iCurrent < 0){
-					_this.iCurrent = 0;
-					_this.animating(_this.autoRuning);
-				}else{
-					_this.animating(_this.autoRuning);
-				}
+			}else{
+				_this.animating(_this.autoRuning);
 			}
 		}
 	}
@@ -177,5 +183,6 @@ new Slider({
 	el:'#sliderBox',
 	autoPlay:true,
 	timeForAuto:1500,
-	timeForAnimate:500
+	timeForAnimate:500,
+	ratio:0.3
 });
